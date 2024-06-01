@@ -7,23 +7,26 @@
 
 <div class="mt-4 rounded">
   <p class="block text-gray-700 font-bold mb-2">Shortened URL</p>
-  <div class="flex items-center">
+  <div class="flex lg:flex-row flex-col lg:items-center lg:gap-2 gap-5">
     <p class="border rounded w-full py-2 px-3 border-gray-700">
-      <a href="<%= @url.original %>" target="_blank" class="text-blue-500 underline"><%= request.base_url + '/' + @url.shortened %>
+      <a href="<%= @url.original %>" target="_blank" class="text-blue-500 underline"><%= request.base_url + '/' + @url.short_url %>
       </a>
     </p>
-    <button id="copyButton" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ml-2">Copy</button>
+    <button id="copyButton" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline flex gap-2">
+      <i class="fa-solid fa-copy"></i>
+      Copy
+    </button>
   </div>
 </div>
 
-<div class="mt-5">
-  <%= link_to "Shorten another", new_url_path, class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded focus:outline-none focus:shadow-outline w-full cursor-pointer  mt-5" %>
+<div class="mt-12">
+  <%= link_to "Shorten another", new_url_path, class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded focus:outline-none focus:shadow-outline w-full cursor-pointer" %>
 </div>
 
 <% if @url.has_shortened_url? %>
   <script>
     document.getElementById('copyButton').addEventListener('click', function() {
-      var shortenedUrl = '<%= request.base_url + '/' + @url.shortened %>';
+      var shortenedUrl = '<%= request.base_url + '/' + @url.short_url %>';
       navigator.clipboard.writeText(shortenedUrl).then(function() {
         var copyButton = document.getElementById('copyButton');
         copyButton.textContent = 'Copied!';

@@ -21,7 +21,7 @@ class UrlsController < ApplicationController
   end
 
   def redirect
-    @url = Url.find_by(shortened: params[:short_url])
+    @url = Url.find_by(shortened: params[:short_url]) || Url.find_by(custom_alias: params[:short_url])
     if @url.present?
       redirect_to @url.original, allow_other_host: true
     else
@@ -32,6 +32,6 @@ class UrlsController < ApplicationController
   private
 
   def url_params
-    params.require(:url).permit(:original)
+    params.require(:url).permit(:original, :custom_alias)
   end
 end
