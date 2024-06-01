@@ -1,31 +1,14 @@
-
-<div class="bg-gray-100 h-screen flex items-center justify-center">
+<div class="bg-gray-100 h-screen flex flex-col items-center justify-center">
   <div class="bg-white p-8 rounded shadow-md w-full max-w-lg">
-    <h1 class="text-2xl font-bold mb-6 text-center">URL Shortener</h1>
-    <%= form_with model: @url, local: true do |form| %>
-      <div class="mb-4">
-        <%= form.label :original, class: "block text-gray-700 font-bold mb-2" %>
-        <%= form.text_field :original, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline", placeholder: "Enter URL" %>
-      </div>
-      <% if @url.shortened.present? %>
-        <div class="mt-4 p-4 bg-green-100 rounded text-center">
-          <p class="text-green-700 font-bold">Shortened URL:</p>
-          <p><a href="<%=@url.original%>" target="_blank" class="text-blue-500 underline"><%= request.base_url + '/' + @url.shortened %></a></p>
-        </div>
-      <% end %>
-      <div class="text-center">
-        <%= form.submit "Shorten URL", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>
-      </div>
-    <% end %>
-    <% if @url.errors.any? %>
-      <div class="mt-4 text-red-600">
-        <h2><%= pluralize(@url.errors.count, "error") %> prohibited this URL from being saved:</h2>
-        <ul>
-          <% @url.errors.full_messages.each do |message| %>
-            <li><%= message %></li>
-          <% end %>
-        </ul>
-      </div>
+    <div class="flex items-center justify-center mb-8 gap-2">
+      <%= image_tag 'logo.png', class: "w-12" %>
+    </div>
+    <% if @url %>
+     <%= render 'show' %>
+    <% else %>
+      <%= render 'form' %>
     <% end %>
   </div>
 </div>
+
+

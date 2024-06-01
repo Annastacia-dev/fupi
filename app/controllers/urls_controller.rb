@@ -1,17 +1,22 @@
 class UrlsController < ApplicationController
+
   def new
-    @url = Url.new
+    @new_url = Url.new
   end
 
   def create
-    byebug
-    @url = Url.new(url_params)
-    @url.shortened = SecureRandom.urlsafe_base64(6)
-
-    if @url.save
+    existing_url = Url.find_by(original: url_params[:original])
+    if existing_url
+      @url = existing_url
       render :new
     else
-      render :new
+      @new_url = Url.new(url_params)
+      if @new_url.save
+        @url = @new_url
+        render :new
+      else
+        render :new
+      end
     end
   end
 

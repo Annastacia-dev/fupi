@@ -1,0 +1,15 @@
+
+<%= form_with model: @new_url, local: true do |form| %>
+  <div class="mb-4">
+    <%= form.label :original, 'Long URL', class: "block text-gray-700 font-bold mb-2" %>
+    <%= form.text_field :original,  class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline #{'border-red-500' if @new_url.errors[:original].any? { |e| e != 'has already been taken'}}", placeholder: "Enter URL", required: true %>
+    <% unless @new_url.errors[:original].include?('has already been taken') %>
+      <% @new_url.errors[:original].each do |error| %>
+        <p class="text-red-500 text-xs italic mt-2"><%= error %></p>
+      <% end %>
+    <% end %>
+  </div>
+  <div class="text-center mt-5">
+    <%= form.submit "Shorten URL", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full cursor-pointer" %>
+  </div>
+<% end %>
